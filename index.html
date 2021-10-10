@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta name="google-site-verification" content="ftFOlJETX-2KNjaPh8W6s8lhigItRuu9fOmjHZZ0nY0" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>Singing-Tacotron: Global duration control attention and dynamic filter for End-to-end singing voice synthesis</title>
+</head>
+<style type="text/css">
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+
+  audio {
+    width: 100%;
+  }
+
+
+
+  
+  @media (max-width: 767px) {
+    .big-screen {
+      display: none;
+    }
+  }
+
+  @media (min-width: 767px) {
+    .small-screen {
+      display: none;
+    }
+  }
+</style>
+
+
+
+
+<body>
+
+  <header class="header">
+    <div class="jumbotron bg-secondary text-center">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <h1><a class="text-light">
+				Singing-Tacotron: Global duration control attention and dynamic filter for End-to-end singing voice synthesis</a></h1>
+            <p>
+              <div class="row">
+                <div class="col-md col-sm-12"><a class="text-light">Tao Wang (tao.wang@nlpr.ia.ac.cn)</a> </div>
+              </div>
+            </p>
+			<p><a class="text-light">National Laboratory of Pattern Recognition, CASIA, Beijing, China<br>
+                CAS Center for Excellence in Brain Science and Intelligence Technology, Beijing, China<br>
+				School of Artificial Intelligence, University of Chinese Academy of Sciences, Beijing, China
+				</p></a>
+				
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  
+  <main>
+    <div class="container">
+      <div class="row" id="intro">
+        <div class="col">
+
+          <h2>Messages</h2>
+          <div>
+            <p>This page shows the samples in the paper "<b>Singing-Tacotron: Global duration control attention and dynamic filter for End-to-end singing voice synthesis</b>".
+			<p>
+			Experiments were based on <a href="https://www.data-baker.com/data/index/compose" title="100 Chinese songs"> 100 Chinese songs </a> which are performed by a female singer. All test samples have not appeared in the training set and validation set. 
+			</p>
+			
+			<p>
+			The most important advantage of the "Singing-Tacotron" is that it does not need the alignment information between musicscore and singing voice. It only needs music score information and singing voice for end-to-end training.			
+			</p>
+			<p>
+			 </div>
+             
+         <h5>The difference between end-to-end TTS and SVS:</h5>
+        <div align="center">
+			<img src="./audio/demo.png" width="400"/>
+		</div>
+        <h5>The framework of Singing-Tacotron:</h5>
+        <div align="center">
+			<img src="./audio/framework1.png" width="1000"/>
+		</div>            
+             
+        </div>
+      </div>
+      <hr>
+
+
+
+
+		  
+		  <h3>1: Some demos of Singing-Tacotron (Marking with <b>GDCA+DF</b> in our paper)</h3>
+			<p>
+			Note: the first two songs are from the test set, and the last two songs are from the musical scores found on the Internet.</p>					 
+                  <div class="big-screen">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="12%" >Song's name</th>
+                          <th width="22%">Singing-Tacotron</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+						
+		<tr>				
+      <th  scope="row"> 小手拉大手 （梁静茹） </th>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample1/sample1.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 还记得那场音乐会的烟火 还记得那个凉凉的深秋 还记得人潮把你推向了我 游乐园拥挤的正是时候
+							 <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo /  h ai j i d e n a g e l iang l iang d e sh en q iou / h ai j i d e r en ch ao b a n i t uei x iang l e uo / iou l e van iong j i d e zh eng sh iii sh iii h ou ou</i>
+                          </td>
+	</tr>					  
+<tr>
+                          <th  scope="row">喜欢 (张悬)</th>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample1/sample2.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 片段中有些散落 有些深刻的错 还不懂这一秒钟 怎么举动怎么好好地和谁牵手 那寂寞有些许不同 我挑着留下没说
+							<br><b>phonemes</b>: p ian d uan zh ong iou x ie s an l uo / iou ou x ie sh en k e d i c uo / h ai b u d ong zh e i m iao zh ong / z en m e j v d ong z en m e h ao h ao d e h e sh ei q ian sh ou / n a j i m o iou x ie x v b u t ong / uo t iao zh e l iou x ia m ei sh uo</i>
+                          </td>
+</tr>							  
+
+					<tr>	
+                     <th  scope="row">过火 (张信哲)</th>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample1/sample3.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 我是多想再给你机会 多想问你究竟爱谁 既然爱 难分是非
+                            <br><b>phonemes</b>:  uo sh iii d uo x iang z ai g ei n i j i h uei / d uo x iang uen n i j iou j ing ai sh ei / j i r an ai / n an f en sh iii f ei</i>
+                          </td>
+</tr>							
+<tr>  
+				    <th  scope="row">别找我麻烦 (蔡健雅)</th>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample1/sample4.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 是故意的吗 是我得罪谁了吗 这一天竟然每件事情都失算 只想转个弯 却绕到了飞机场 发现没钱在身上
+                            <br><b>phonemes</b>: sh iii g u i d e m a / sh iii uo d e z uei sh ei l e m a / zh e i t ian j ing r an m ei j ian sh iii q ing d ou sh iii s uan / zh iii x iang zh uan g e uan / q ve r ao d ao l e f ei j i ch ang / f a x ian m ei q ian z ai sh en sh ang</i>
+                          </td>
+ </tr>	                      
+								
+                      </tbody>
+                    </table>
+                  </div>				 
+				  
+				  
+				  <hr>
+ 
+
+
+
+
+
+
+
+
+
+  <h3>2: Comparison between different systems</h3>
+				<p>
+			Note: since systems LA, LA+Window and FA+DF cannot synthesize normal songs, we combine them and give an abnormal example as a reference.</p>			 
+                  <div class="big-screen">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="20%">Original</th>
+						 <th width="20%">LA & LA+Window & FA+DF <font size="4"  color="red">(Failed systhesis)</font></th>
+                          <th width="20%">FA</th>
+
+						  <th width="20%">GDCA</th>
+						  <th width="20%">GDCA+DF (Singing-Tacotron)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+						<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample2/009_01_0.wav" type="audio/wav" />
+                             </audio><br><i><b>lyric</b>:   还 记 得 那 场 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo </i>
+                      
+                          </td>
+						  
+						    <td>
+                            <audio controls>
+                               <source src="./audio/sample2/009_01_4.wav" type="audio/wav" />
+                             </audio><br><i><b>lyric</b>:   还 记 得 那 场 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo </i>
+                       
+                          </td>
+						  
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/009_01_3.wav" type="audio/wav" />
+                           </audio><br><i><b>lyric</b>:   还 记 得 那 场 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo </i>
+                     
+                          </td>
+						  
+
+
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/009_01_5.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>:   还 记 得 那 场 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo </i>
+                        
+                          </td>
+
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/009_01_6.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>:   还 记 得 那 场 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo </i>
+                          
+                          </td>						       
+						</tr>				
+
+
+						<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample2/009_02_0.wav" type="audio/wav" />
+                           </audio><br><i><b>lyric</b>: 还 记 得 那 个 凉 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e l iang l iang d e sh en q iou</i>
+                          
+                          </td>
+						  
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/009_02_4.wav" type="audio/wav" />
+                             </audio><br><i><b>lyric</b>: 还 记 得 那 个 凉 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e l iang l iang d e sh en q iou</i>
+                          
+                          </td>
+						  
+                          <td>
+                            <audio controls>
+                               <source src="./audio/sample2/009_02_3.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 还 记 得 那 个 凉 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e l iang l iang d e sh en q iou</i>
+                          
+                          </td>
+
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/009_02_5.wav" type="audio/wav" />
+                           </audio><br><i><b>lyric</b>: 还 记 得 那 个 凉 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e l iang l iang d e sh en q iou</i>
+                          
+                          </td>
+
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/009_02_6.wav" type="audio/wav" />
+                             </audio><br><i><b>lyric</b>: 还 记 得 那 个 凉 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e l iang l iang d e sh en q iou</i>
+                          
+                          </td>						       
+						</tr>							
+						
+						
+
+						<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample2/034_01_0.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>: 片 段 中 有 些 散 落. <br><b>phonemes</b>: p ian d uan uan zh ong iou x ie s an l uo</i>
+                          </td>
+						  
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/034_01_4.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 片 段 中 有 些 散 落. <br><b>phonemes</b>: p ian d uan uan zh ong iou x ie s an l uo</i>
+                          </td>
+						  
+                          <td>
+                            <audio controls>
+                               <source src="./audio/sample2/034_01_3.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 片 段 中 有 些 散 落. <br><b>phonemes</b>: p ian d uan uan zh ong iou x ie s an l uo</i>
+                          </td>
+
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/034_01_5.wav" type="audio/wav" />
+                           </audio><br><i><b>lyric</b>: 片 段 中 有 些 散 落. <br><b>phonemes</b>: p ian d uan uan zh ong iou x ie s an l uo</i>
+                          </td>
+
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/034_01_6.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>: 片 段 中 有 些 散 落. <br><b>phonemes</b>: p ian d uan uan zh ong iou x ie s an l uo</i>
+                          </td>						       
+						</tr>				
+
+
+						<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample2/034_02_0.wav" type="audio/wav" />
+                           </audio><br><i><b>lyric</b>: 有 些 深 刻 的 错. <br><b>phonemes</b>: iou x ie sh en k e d i c uo</i>
+                          </td>
+						  
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/034_02_4.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>: 有 些 深 刻 的 错. <br><b>phonemes</b>: iou x ie sh en k e d i c uo</i>
+                          </td>
+						  
+                          <td>
+                            <audio controls>
+                               <source src="./audio/sample2/034_02_3.wav" type="audio/wav" />
+                         </audio><br><i><b>lyric</b>: 有 些 深 刻 的 错. <br><b>phonemes</b>: iou x ie sh en k e d i c uo</i>
+                          </td>
+
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/034_02_5.wav" type="audio/wav" />
+                         </audio><br><i><b>lyric</b>: 有 些 深 刻 的 错. <br><b>phonemes</b>: iou x ie sh en k e d i c uo</i>
+                          </td>
+
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample2/034_02_6.wav" type="audio/wav" />
+                           </audio><br><i><b>lyric</b>: 有 些 深 刻 的 错. <br><b>phonemes</b>: iou x ie sh en k e d i c uo</i>
+                          </td>						       
+						</tr>		
+
+		
+                      </tbody>
+                    </table>
+                  </div>				 
+				  
+
+		  <hr>
+
+
+  <h3>3: Duration control with different tempos</h3>
+				 <p>
+			Note: we change the tempo value of each lyrics.</p>			
+                  <div class="big-screen">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="20%">Tempo = 60</th>
+						  <th width="20%">Tempo = 90</th>
+						  <th width="20%">Tempo = 120</th>
+						  <th width="20%">Tempo = 150</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo60/009_01.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>:   还 记 得 那 场 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo </i>
+                          </td>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo90/009_01.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>:   还 记 得 那 场 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo </i>
+                          </td>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo120/009_01.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>:   还 记 得 那 场 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo </i>
+                          </td>
+						   <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo150/009_01.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>:   还 记 得 那 场 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a ch ang in ve h uei d e ian h uo </i>
+                          </td>
+						</tr>			
+
+<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo60/009_02.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 还 记 得 那 个 凉 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e l iang l iang d e sh en q iou</i>
+                          </td>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo90/009_02.wav" type="audio/wav" />
+                             </audio><br><i><b>lyric</b>: 还 记 得 那 个 凉 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e l iang l iang d e sh en q iou</i>
+                          </td>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo120/009_02.wav" type="audio/wav" />
+                           </audio><br><i><b>lyric</b>: 还 记 得 那 个 凉 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e l iang l iang d e sh en q iou</i>
+                          </td>
+						   <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo150/009_02.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 还 记 得 那 个 凉 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e l iang l iang d e sh en q iou</i>
+                         </td>
+						</tr>	
+	
+
+<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo60/034_01.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 片 段 中 有 些 散 落. <br><b>phonemes</b>: p ian d uan uan zh ong iou x ie s an l uo</i>
+                          </td>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo90/034_01.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>: 片 段 中 有 些 散 落. <br><b>phonemes</b>: p ian d uan uan zh ong iou x ie s an l uo</i>
+                            </td>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo120/034_01.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>: 片 段 中 有 些 散 落. <br><b>phonemes</b>: p ian d uan uan zh ong iou x ie s an l uo</i>
+                           </td>
+						   <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo150/034_01.wav" type="audio/wav" />
+                         </audio><br><i><b>lyric</b>: 片 段 中 有 些 散 落. <br><b>phonemes</b>: p ian d uan uan zh ong iou x ie s an l uo</i>
+                           </td>
+						</tr>	
+
+
+
+<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo60/034_02.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 有 些 深 刻 的 错. <br><b>phonemes</b>: iou x ie sh en k e d i c uo</i>
+                          </td>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo90/034_02.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>: 有 些 深 刻 的 错. <br><b>phonemes</b>: iou x ie sh en k e d i c uo</i>
+                            </td>
+						  
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo120/034_02.wav" type="audio/wav" />
+                         </audio><br><i><b>lyric</b>: 有 些 深 刻 的 错. <br><b>phonemes</b>: iou x ie sh en k e d i c uo</i>
+                            </td>
+						   <td> 
+                            <audio controls>
+                              <source src="./audio/sample4/wav-tempo150/034_02.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>: 有 些 深 刻 的 错. <br><b>phonemes</b>: iou x ie sh en k e d i c uo</i>
+                           </td>
+						</tr>	
+	
+                      </tbody>
+                    </table>
+                  </div>			  
+      <hr>
+	  
+	  
+	  
+  <h3>4: Duration control with different duration on a particular word</h3>
+				 				 <p>
+			Note: we keep the tempo value unchanged and change the duration information of a specific word (the word marked in <font size="4"  color="red">red</font>) in the musicscore.</p>		
+                  <div class="big-screen">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="20%">Duration = 2</th>
+						  <th width="20%">Duration = 3</th>
+						  <th width="20%">Duration = 4</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+					  
+						<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample3/009_01_0.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>:   还 记 得 那 <font size="4"  color="red">场</font> 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a <font size="4"  color="red">ch ang</font> in ve h uei d e ian h uo </i>
+                          </td>
+						  
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample3/009_01_1.wav" type="audio/wav" />
+                         </audio><br><i><b>lyric</b>:   还 记 得 那 <font size="4"  color="red">场</font> 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a <font size="4"  color="red">ch ang</font> in ve h uei d e ian h uo </i>
+                          </td>
+						  
+                          <td>
+                            <audio controls>
+                               <source src="./audio/sample3/009_01_2.wav" type="audio/wav" />
+                         </audio><br><i><b>lyric</b>:   还 记 得 那 <font size="4"  color="red">场</font> 音 乐 会 的 烟 火. <br><b>phonemes</b>: h ai j i d e n a <font size="4"  color="red">ch ang</font> in ve h uei d e ian h uo </i>
+                          </td>
+						</tr>											  
+					  
+						<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample3/009_02_2.wav" type="audio/wav" />
+                            </audio><br><i> <b>lyric</b>: 还 记 得 那 个 <font size="4"  color="red">凉</font> 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e <font size="4"  color="red">l iang</font> l iang d e sh en q iou </i>
+                          </td>
+						  
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample3/009_02_1.wav" type="audio/wav" />
+                            </audio><br><i> <b>lyric</b>: 还 记 得 那 个 <font size="4"  color="red">凉</font> 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e <font size="4"  color="red">l iang</font> l iang d e sh en q iou </i>
+                         </td>
+						  
+                          <td>
+                            <audio controls>
+                               <source src="./audio/sample3/009_02_0.wav" type="audio/wav" />
+                           </audio><br><i> <b>lyric</b>: 还 记 得 那 个 <font size="4"  color="red">凉</font> 凉 的 深 秋. <br><b>phonemes</b>: h ai j i d e n a g e <font size="4"  color="red">l iang</font> l iang d e sh en q iou </i>
+                          </td>
+						</tr>							  
+
+
+						<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample3/034_01_0.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 片 <font size="4"  color="red">段</font> 中 有 些 散 落. <br><b>phonemes</b>: p ian <font size="4"  color="red">d uan</font> uan zh ong iou x ie s an l uo</i>
+                          </td>
+						  
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample3/034_01_1.wav" type="audio/wav" />
+                            </audio><br><i><b>lyric</b>: 片 <font size="4"  color="red">段</font> 中 有 些 散 落. <br><b>phonemes</b>: p ian <font size="4"  color="red">d uan</font> uan zh ong iou x ie s an l uo</i>
+                        </td>
+						  
+                          <td>
+                            <audio controls>
+                               <source src="./audio/sample3/034_01_2.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>: 片 <font size="4"  color="red">段</font> 中 有 些 散 落. <br><b>phonemes</b>: p ian <font size="4"  color="red">d uan</font> uan zh ong iou x ie s an l uo</i>
+                        </td>
+						</tr>							  
+
+						<tr>
+                          <td> 
+                            <audio controls>
+                              <source src="./audio/sample3/034_02_0.wav" type="audio/wav" />
+                           </audio><br><i><b>lyric</b>: 有 些 <font size="4"  color="red">深</font> 刻 的 错. <br><b>phonemes</b>: iou x ie <font size="4"  color="red">sh en</font> k e d i c uo</i>
+                         </td>
+						  
+						  <td>
+                            <audio controls>
+                              <source src="./audio/sample3/034_02_1.wav" type="audio/wav" />
+                           </audio><br><i><b>lyric</b>: 有 些 <font size="4"  color="red">深</font> 刻 的 错. <br><b>phonemes</b>: iou x ie <font size="4"  color="red">sh en</font> k e d i c uo</i>
+                       </td> 
+						  
+                          <td>
+                            <audio controls>
+                               <source src="./audio/sample3/034_02_2.wav" type="audio/wav" />
+                          </audio><br><i><b>lyric</b>: 有 些 <font size="4"  color="red">深</font> 刻 的 错. <br><b>phonemes</b>: iou x ie <font size="4"  color="red">sh en</font> k e d i c uo</i>
+                         </td>
+						</tr>		
+					
+                      </tbody>
+                    </table>
+                  </div>			  
+	  
+      <hr>	        <hr>
+      <!-- <div class="row" id="contact">
+          <div class="col">
+            <h2>Contact</h2>
+            <div></div>
+          </div>
+        </div> -->
+    </div>
+  </main>
+  <footer class="bg-secondary text-light mt-4 pt-3 pb-2 ">
+    <div class="container">
+      <p class="text-center">
+        <small>
+          Singing-Tacotron: Global duration control attention and dynamic filter for End-to-end singing voice synthesis
+          <br>
+          <a class="text-light"><strong>Tao Wang</strong></a> |
+          tao.wang@nlpr.ia.ac.cn
+        </small>
+      </p>
+    </div>
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
